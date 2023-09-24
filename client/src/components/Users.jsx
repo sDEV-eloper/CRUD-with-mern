@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 const Users = () => {
-    const [users, setUsers]=useState([
-        {
-            name:"suraj dev", age:21, email: "sdev123@gmail.com"
-        },
-        {
-            name:"suraj dev", age:21, email: "sdev123@gmail.com"
-        },
-        {
-            name:"suraj dev", age:21, email: "sdev123@gmail.com"
-        },
-    ])
+    const [users, setUsers]=useState([])
+
+    useEffect( ()=>{
+    axios.get('http://localhost:3001')
+    .then(res=>setUsers(res.data))
+    .catch(err=> console.log(err))
+  }, []);
+
+  const handleDelete=()=>{
+    //   alert("delete")    
+
+  }
   return (
     <div className='flex h-screen bg-blue-500 justify-center items-center'>
 <div className='bg-white rounded p-3'>
@@ -29,13 +31,13 @@ const Users = () => {
 <tbody>
    {
     users.map((user)=>(
-        <tr>
+        <tr key={user._id}>
         <td>{user.name}</td>
         <td>{user.email}</td>
         <td>{user.age}</td>
         <td className='flex gap-2'>
-            <Link to="/update" className='px-2 rounded bg-blue-600 text-white'>Update</Link>
-            <button className='px-2 rounded bg-red-600 text-white'>Delete</button>
+            <Link to={`/update/${user._id}`} className='px-2 rounded bg-blue-600 text-white'>Update</Link>
+            <button onClick={handleDelete} className='px-2 rounded bg-red-600 text-white'>Delete</button>
         </td>
     </tr>
     ))

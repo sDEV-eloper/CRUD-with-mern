@@ -16,7 +16,7 @@ const App = () => {
 const router=createBrowserRouter([
   {path:'/', element:<Users/>},
   {path:'/create', element:<CreateUser/>},
-  {path:'/update', element:<UpdateUser/>},
+  {path:'/update/:id', element:<UpdateUser/>},
   {path:'/policy', element:<Policy/>},
   {path:'/pageNotFound', element:<PageNotFound/>},
 
