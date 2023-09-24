@@ -11,9 +11,12 @@ const Users = () => {
     .catch(err=> console.log(err))
   }, []);
 
-  const handleDelete=()=>{
-    //   alert("delete")    
-
+  const handleDelete=(userId)=>{
+    axios.delete(`http://localhost:3001/deleteUser/${userId}`)
+    .then((res)=>{
+      window.location.reload();
+    })
+    .catch((err)=>console.log(err))
   }
   return (
     <div className='flex h-screen bg-blue-500 justify-center items-center'>
@@ -37,7 +40,7 @@ const Users = () => {
         <td>{user.age}</td>
         <td className='flex gap-2'>
             <Link to={`/update/${user._id}`} className='px-2 rounded bg-blue-600 text-white'>Update</Link>
-            <button onClick={handleDelete} className='px-2 rounded bg-red-600 text-white'>Delete</button>
+            <button onClick={(e) => handleDelete(user._id)} className='px-2 rounded bg-red-600 text-white'>Delete</button>
         </td>
     </tr>
     ))

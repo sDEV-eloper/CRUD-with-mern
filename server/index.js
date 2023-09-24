@@ -26,6 +26,17 @@ app.post("/createUser", (req, res)=>{
     .then(users=>res.json(users))
     .catch(err=>res.json(err))
 })
+app.delete("/deleteUser/:id", (req, res)=>{
+    const id = req.params.id;
+    UserModel.findByIdAndDelete({_id:id})
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        res.json({ message: "User deleted successfully" });
+      })
+      .catch((err) => res.status(500).json(err));
+})
 
 app.put("/updateUser/:id", (req, res)=>{
     const id=req.params.id;
